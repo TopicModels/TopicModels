@@ -4,9 +4,11 @@ TEX_SOURCE = topicmodels.tex
 BIB_SOURCE = biblio.bib
 FIG_SOURCE = $(wildcard fig/*)
 
-.PHONY : all pdf html clean
+.PHONY : all build pdf html clean
 
-all : pdf html
+build : pdf html
+
+all : clean build
 
 pdf : $(PDF_TARGET)
 
@@ -16,7 +18,7 @@ $(PDF_TARGET) : $(TEX_SOURCE) $(BIB_SOURCE) $(FIG_SOURCE)
 	tectonic $<
 
 $(HTML_TARGET) : $(TEX_SOURCE) $(BIB_SOURCE) $(FIG_SOURCE)
-	pandoc -s $< -o $@ --mathjax -C --bibliography $(BIB_SOURCE) --metadata link-citations
+	pandoc -s $< -o $@ --mathjax -C --bibliography $(BIB_SOURCE) --toc --metadata link-citations
 
 clean : 
 	- rm $(PDF_TARGET) $(HTML_TARGET)
