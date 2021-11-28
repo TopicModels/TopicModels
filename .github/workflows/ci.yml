@@ -2,6 +2,7 @@ on: push
 
 jobs:
   make:
+    runs-on: ubuntu-latest
     container: archlinux
     steps:
       - uses: actions/checkout@v2
