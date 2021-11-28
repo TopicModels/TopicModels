@@ -2,15 +2,15 @@ on: push
 
 jobs:
   make:
-    container: archlinux/base
+    container: archlinux
     steps:
       - uses: actions/checkout@v2
         with:
           persist-credentials: false
           fetch-depth: 0
-      - run: sudo pacman -Syu --noconfirm make git pandoc pandoc-crossref
-      - run: git clone https://aur.archlinux.org/tectonic-bin.git && cd tectonic-bin && makepkg && sudo pacman -U tectonic-bin-* --noconfirm && cd .. && rm -rf tectonic-bin
-      - run: make all
+      - run: pacman -Syu --noconfirm git make fakeroot binutils fontconfig harfbuzz-icu biber pandoc pandoc-crossref nodejs
+      - run: git clone https://aur.archlinux.org/tectonic-bin.git && cd tectonic-bin && env EUID=1 makepkg && pacman -U tectonic-bin-* --noconfirm && cd .. && rm -rf tectonic-bin
+      - run: source /etc/profile && make all
       - uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
