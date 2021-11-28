@@ -6,9 +6,6 @@ jobs:
     container: archlinux
     steps:
       - uses: actions/checkout@v2
-        with:
-          persist-credentials: false
-          fetch-depth: 0
       - run: pacman -Syu --noconfirm git make fakeroot binutils fontconfig harfbuzz-icu biber pandoc pandoc-crossref nodejs
       - run: git clone https://aur.archlinux.org/tectonic-bin.git && cd tectonic-bin && env EUID=1 makepkg && pacman -U tectonic-bin-* --noconfirm && cd .. && rm -rf tectonic-bin
       - run: source /etc/profile && make all
