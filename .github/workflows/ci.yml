@@ -5,7 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     container: archlinux
     steps:
-      - run: pacman -Syu --noconfirm git make fakeroot binutils fontconfig harfbuzz-icu biber pandoc pandoc-crossref nodejs
+      - run: pacman -Syu --noconfirm git make fakeroot binutils fontconfig harfbuzz-icu biber pandoc pandoc-crossref nodejs texinfo
       - run: git clone https://aur.archlinux.org/tectonic-bin.git && cd tectonic-bin && env EUID=1 makepkg && pacman -U tectonic-bin-* --noconfirm && cd .. && rm -rf tectonic-bin
       - uses: actions/checkout@v2
       - run: source /etc/profile && make all
